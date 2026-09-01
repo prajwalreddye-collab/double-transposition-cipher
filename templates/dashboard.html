@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Double Transposition Cipher</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            color: #1f2937;
+        }
+
+        /* Header */
+        .header {
+            background: #172554;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .header p {
+            margin: 8px 0 0;
+            font-size: 16px;
+        }
+
+        /* Main container */
+        .container {
+            width: 90%;
+            max-width: 950px;
+            margin: 35px auto;
+        }
+
+        /* Card */
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.10);
+        }
+
+        .section-title {
+            font-size: 22px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        /* Labels */
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        /* Text area */
+        textarea {
+            width: 100%;
+            min-height: 140px;
+            padding: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            resize: vertical;
+            outline: none;
+        }
+
+        textarea:focus,
+        input:focus {
+            border-color: #2563eb;
+        }
+
+        /* Keys */
+        .keys {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .key-box {
+            flex: 1;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        /* Main buttons */
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 13px 22px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .encrypt {
+            background: #2563eb;
+            color: white;
+        }
+
+        .decrypt {
+            background: #16a34a;
+            color: white;
+        }
+
+        .encrypt:hover {
+            background: #1d4ed8;
+        }
+
+        .decrypt:hover {
+            background: #15803d;
+        }
+
+        /* Result */
+        .result {
+            margin-top: 30px;
+        }
+
+        .result textarea {
+            background: #f8fafc;
+        }
+
+        /* Result buttons */
+        .result-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .copy {
+            background: #475569;
+            color: white;
+        }
+
+        .clear {
+            background: #dc2626;
+            color: white;
+        }
+
+        .copy:hover {
+            background: #334155;
+        }
+
+        .clear:hover {
+            background: #b91c1c;
+        }
+
+        /* Information section */
+        .info {
+            margin-top: 25px;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #2563eb;
+        }
+
+        .info h3 {
+            margin-top: 0;
+        }
+
+        .info p {
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: #64748b;
+            margin: 25px 0;
+            font-size: 14px;
+        }
+
+        /* Mobile */
+        @media (max-width: 650px) {
+            .keys {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .buttons,
+            .result-buttons {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .header h1 {
+                font-size: 25px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>🔐 Double Transposition Cipher</h1>
+        <p>Secure Text Encryption & Decryption Dashboard</p>
+    </div>
+
+
+    <!-- Main -->
+    <div class="container">
+
+        <div class="card">
+
+            <h2 class="section-title">Cipher Dashboard</h2>
+
+            <form method="POST">
+
+                <!-- Message -->
+                <label for="message">Enter Message</label>
+
+                <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Enter your message here..."
+                    required>{{ message }}</textarea>
+
+
+                <!-- Keys -->
+                <div class="keys">
+
+                    <div class="key-box">
+
+                        <label for="key1">First Key</label>
+
+                        <input
+                            id="key1"
+                            type="number"
+                            name="key1"
+                            min="1"
+                            value="{{ key1 }}"
+                            placeholder="Enter first key"
+                            required>
+
+                    </div>
+
+
+                    <div class="key-box">
+
+                        <label for="key2">Second Key</label>
+
+                        <input
+                            id="key2"
+                            type="number"
+                            name="key2"
+                            min="1"
+                            value="{{ key2 }}"
+                            placeholder="Enter second key"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Encryption / Decryption -->
+                <div class="buttons">
+
+                    <button
+                        class="encrypt"
+                        type="submit"
+                        name="operation"
+                        value="encrypt">
+                        🔒 Encrypt
+                    </button>
+
+
+                    <button
+                        class="decrypt"
+                        type="submit"
+                        name="operation"
+                        value="decrypt">
+                        🔓 Decrypt
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <!-- Result -->
+            <div class="result">
+
+                <label for="result">Result</label>
+
+                <textarea
+                    id="result"
+                    readonly
+                    placeholder="Encrypted or decrypted text will appear here...">{{ result }}</textarea>
+
+
+                <div class="result-buttons">
+
+                    <button
+                        class="copy"
+                        type="button"
+                        onclick="copyResult()">
+                        📋 Copy Result
+                    </button>
+
+
+                    <button
+                        class="clear"
+                        type="button"
+                        onclick="clearForm()">
+                        🗑️ Clear
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Information -->
+            <div class="info">
+
+                <h3>About Double Transposition Cipher</h3>
+
+                <p>
+                    Double Transposition Cipher is a classical encryption
+                    technique that applies two transposition operations to
+                    rearrange the characters of a message.
+                </p>
+
+                <p>
+                    The first key performs the initial transposition and the
+                    second key performs another transposition. Decryption
+                    reverses these operations to recover the original message.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Footer -->
+        <div class="footer">
+
+            <p>
+                Double Transposition Cipher Project
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- JavaScript -->
+    <script>
+
+        function copyResult() {
+
+            const result = document.getElementById("result");
+
+            if (result.value.trim() === "") {
+
+                alert("There is no result to copy.");
+
+                return;
+            }
+
+            navigator.clipboard.writeText(result.value);
+
+            alert("Result copied successfully!");
+
+        }
+
+
+        function clearForm() {
+
+            document.getElementById("message").value = "";
+
+            document.getElementById("key1").value = "";
+
+            document.getElementById("key2").value = "";
+
+            document.getElementById("result").value = "";
+
+        }
+
+    </script>
+
+</body>
+</html>
